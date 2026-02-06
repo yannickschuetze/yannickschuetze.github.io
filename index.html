@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wispa Festival</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+      :root {
+        --bg: #050505;
+        --bg-2: #0d0d0d;
+        --ink: #f2f2f2;
+        --muted: #b8b8b8;
+        --accent: #ff7a00;
+        --accent-2: #00f5d4;
+        --glass: rgba(255, 255, 255, 0.06);
+        --border: rgba(255, 255, 255, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(1200px 600px at 90% -10%, rgba(255, 122, 0, 0.2), transparent 60%),
+          radial-gradient(900px 500px at 0% 10%, rgba(0, 245, 212, 0.15), transparent 55%),
+          var(--bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1100px, 92vw);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(12px);
+        background: linear-gradient(to bottom, rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.4));
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 0;
+      }
+
+      .logo {
+        display: flex;
+        flex-direction: column;
+        padding: 8px 0;
+      }
+
+      .logo__name {
+        font-family: "Bebas Neue", cursive;
+        font-size: 32px;
+        letter-spacing: 1px;
+        line-height: 1;
+      }
+
+      .logo__date {
+        font-size: 14px;
+      }
+
+      .nav-links {
+        display: flex;
+        column-gap: 22px;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+
+      .nav-links a {
+        position: relative;
+        padding-bottom: 6px;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transition: width 0.35s ease;
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a:focus-visible::after {
+        width: 100%;
+      }
+
+      .hero {
+        padding: 110px 0 90px;
+        position: relative;
+      }
+
+      .hero h1 {
+        font-family: "Bebas Neue", cursive;
+        font-size: clamp(48px, 12vw, 110px);
+        margin: 0 0 20px;
+        line-height: 0.9;
+        letter-spacing: 2px;
+      }
+
+      .hero p {
+        max-width: 640px;
+        font-size: 18px;
+        color: var(--muted);
+        margin-bottom: 28px;
+      }
+
+      .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .btn {
+        padding: 14px 26px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--glass);
+        color: var(--ink);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+      }
+
+      .btn.primary {
+        background: linear-gradient(120deg, var(--accent), #ffb703);
+        color: #120c05;
+        border: none;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      .cursor-ring {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(255, 183, 3, 0.2);
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 9998;
+        opacity: 0;
+        transition: opacity 0.2s cubic-bezier(0.65, 0, 0.35, 1), width 0.25s cubic-bezier(0.65, 0, 0.35, 1), height 0.25s cubic-bezier(0.65, 0, 0.35, 1), background 0.25s cubic-bezier(0.65, 0, 0.35, 1), left 0.3s cubic-bezier(0.22, 1, 0.36, 1), top 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      body.cursor-active .cursor-ring {
+        opacity: 1;
+      }
+
+      body.cursor-hover .cursor-ring {
+        width: 10px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.5); 
+        transform: translate(-50%, -50%);
+      }
+
+      .hero-grid {
+        margin-top: 42px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+      }
+
+      .hero-card {
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        padding: 20px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        min-height: 120px;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+
+      section h2 {
+        font-family: "Bebas Neue", cursive;
+        font-size: clamp(36px, 7vw, 72px);
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+      }
+
+      .section-intro {
+        color: var(--muted);
+        max-width: 720px;
+        margin-bottom: 36px;
+      }
+
+      .lineup-grid,
+      .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        padding: 22px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: var(--bg-2);
+        transition: transform 0.4s ease, border-color 0.4s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+
+      .card h3 {
+        margin: 8px 0 12px;
+        font-size: 20px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: rgba(255, 122, 0, 0.15);
+        color: #ffd2a1;
+      }
+
+      details {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+        background: var(--bg-2);
+        transition: border-color 0.3s ease;
+      }
+
+      details + details {
+        margin-top: 14px;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      summary::after {
+        content: "+";
+        font-size: 20px;
+        transition: transform 0.35s ease;
+      }
+
+      details[open] summary::after {
+        transform: rotate(45deg);
+      }
+
+      details p {
+        margin: 14px 0 0;
+        color: var(--muted);
+      }
+
+      footer {
+        padding: 40px 0 60px;
+        border-top: 1px solid var(--border);
+        background: #070707;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 20px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .float {
+        animation: float 10s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-14px);
+        }
+      }
+
+      @media (max-width: 760px) {
+        html {
+          scroll-padding-top: 80px;
+        }
+
+        .nav {
+          flex-direction: column;
+          gap: 12px;
+        }
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .hero {
+          padding-top: 80px;
+        }
+
+        .logo {
+          justify-content: center;
+          align-items: center;
+        }
+
+        .container {
+          width: min(1100px, 85vw);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .cursor-ring {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor-ring"></div>
+    <header>
+      <div class="container nav">
+        <div class="logo"><span class="logo__name">Wispa Festival</span><span class="logo__date">06.06 - 07.06.2026</span></div>
+        <nav class="nav-links">
+          <a href="#hero">Das Festival</a>
+          <a href="#lineup">Line-Up</a>
+          <a href="#aktuelles">Aktuelles</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="hero">
+        <div class="container">
+          <div class="reveal">
+            <h1>Wispa Festival 2026</h1>
+            <p>
+              Das Wispa Festival geht in die nächste Runde! Am 06. Juni 2026 gibt es ein ganzes Wochenende
+              voller Rock, Spaß und guter Vibes. Für Familien, Freunde und alle, die Bock auf ein entspanntes, aber lautes Festival haben.
+            </p>
+            <div class="hero-cta">
+              <a class="btn primary" href="#lineup">Line-Up entdecken</a>
+              <a class="btn" href="#aktuelles">Aktuelles</a>
+            </div>
+          </div>
+          <div class="hero-grid">
+            <div class="hero-card reveal float">
+              <span class="tag">Familie</span>
+              <h3>Kids Zone</h3>
+              <p>Workshops, leise Areas und kreative Spielstationen.</p>
+            </div>
+            <div class="hero-card reveal">
+              <span class="tag">Location</span>
+              <h3>Am See</h3>
+              <p>Chill-Zonen, Sonnenuntergang am Wasser, kurze Wege.</p>
+            </div>
+            <div class="hero-card reveal float">
+              <span class="tag">Food</span>
+              <h3>Regional</h3>
+              <p>Veggie-Optionen, lokale Partner, späte Snacks.</p>
+            </div>
+            <div class="hero-card reveal">
+              <span class="tag">Sound</span>
+              <h3>Rock Pur</h3>
+              <p>Von Indie bis Classic, laut genug und trotzdem safe.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="lineup">
+        <div class="container">
+          <h2 class="reveal">Line-Up</h2>
+          <p class="section-intro reveal">
+            Handverlesen, divers und laut. Die Bühne gehört Bands, die Bock haben,
+            und dem Publikum, das mitsingt.
+          </p>
+          <div class="lineup-grid">
+            <article class="card reveal">
+              <span class="tag">Headliner</span>
+              <h3>Stromkinder</h3>
+              <p>Deutschrock mit einem Hang zu großen Refrains.</p>
+            </article>
+            <article class="card reveal">
+              <span class="tag">Indie</span>
+              <h3>Neonfjord</h3>
+              <p>Atmosphärische Gitarren und ein Schlagzeug, das treibt.</p>
+            </article>
+            <article class="card reveal">
+              <span class="tag">Classic</span>
+              <h3>Rheinstern</h3>
+              <p>Oldschool-Riffs, neue Energie und ein volles Brett.</p>
+            </article>
+            <article class="card reveal">
+              <span class="tag">Local</span>
+              <h3>Wispern</h3>
+              <p>Die Szene aus der Region mit frischen Songs.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="aktuelles">
+        <div class="container">
+          <h2 class="reveal">Aktuelles</h2>
+          <p class="section-intro reveal">
+            News, Ankündigungen und Updates für euren Festival-Sommer.
+          </p>
+          <div class="news-grid">
+            <article class="card reveal">
+              <span class="tag">Neu</span>
+              <h3>Early-Bird Tickets</h3>
+              <p>Kontingent jetzt verfügbar. Familienpakete inklusive.</p>
+            </article>
+            <article class="card reveal">
+              <span class="tag">Info</span>
+              <h3>Camping Zonen</h3>
+              <p>Neue ruhige Bereiche für Familien und Baby-Stationen.</p>
+            </article>
+            <article class="card reveal">
+              <span class="tag">Spotlight</span>
+              <h3>Aftershow Sessions</h3>
+              <p>Akustik-Sets am See, jeden Abend ab 22 Uhr.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="container">
+          <h2 class="reveal">FAQ</h2>
+          <p class="section-intro reveal">
+            Kurz und klar. Für alles andere hilft unser Team vor Ort.
+          </p>
+          <details class="reveal">
+            <summary>Ist das Festival kinderfreundlich?</summary>
+            <p>
+              Ja, es gibt eine Kids Zone, leise Bereiche, Wickelstationen und
+              familienfreundliche Zeitfenster.
+            </p>
+          </details>
+          <details class="reveal">
+            <summary>Gibt es barrierefreie Zugänge?</summary>
+            <p>
+              Das Gelände ist barrierearm, mit speziellen Viewing Areas und
+              support vor Ort.
+            </p>
+          </details>
+          <details class="reveal">
+            <summary>Wie komme ich zum Gelände?</summary>
+            <p>
+              Shuttle-Busse vom Bahnhof, Fahrradparkplätze und ein familiennaher
+              Drop-off Bereich.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-links">
+          <a href="#">Datenschutz</a>
+          <a href="#">Impressum</a>
+          <a href="#">Kontakt</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const revealElements = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      revealElements.forEach((el) => observer.observe(el));
+
+      const cursorRing = document.querySelector(".cursor-ring");
+      const hoverTargets = document.querySelectorAll("a, button, .btn, summary");
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches === false) {
+        document.body.classList.add("cursor-active");
+
+        window.addEventListener("mousemove", (event) => {
+          const { clientX, clientY } = event;
+          cursorRing.style.left = `${clientX}px`;
+          cursorRing.style.top = `${clientY}px`;
+        });
+
+        hoverTargets.forEach((el) => {
+          el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
+          el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
+        });
+      }
+    </script>
+  </body>
+</html>
