@@ -333,6 +333,10 @@
           scroll-padding-top: 80px;
         }
 
+        .cursor-ring {
+          display: none;
+        }
+
         .nav {
           flex-direction: column;
           gap: 12px;
@@ -533,7 +537,7 @@
       const cursorRing = document.querySelector(".cursor-ring");
       const hoverTargets = document.querySelectorAll("a, button, .btn, summary");
 
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches === false) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches === false && "ontouchstart" in window === false) {
         document.body.classList.add("cursor-active");
 
         window.addEventListener("mousemove", (event) => {
