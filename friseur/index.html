@@ -57,7 +57,12 @@
   <header class="site-header" id="start">
     <div class="container nav-wrap">
       <a class="brand" href="#start">Friseur Michela Bonato</a>
-      <nav aria-label="Hauptnavigation">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menü öffnen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="site-menu" aria-label="Hauptnavigation">
         <ul class="menu">
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#ueber-uns">Salon</a></li>
@@ -71,7 +76,7 @@
   <main>
     <section class="hero reveal">
       <div class="container hero-grid">
-        <div>
+        <div class="hero-copy">
           <p class="kicker">Dein Friseur in Lülsdorf</p>
           <h1>Friseur<br />Michela Bonato</h1>
           <h2 class="h3">Leidenschaft, Erfahrung, Ästhetik</h2>
@@ -88,7 +93,7 @@
           </p>
           <a class="btn" href="https://wa.link/77ubc4">Termin anfragen</a>
         </div>
-        <img src="img/hero.jpg" alt="Friseursalon mit elegantem Interieur" loading="lazy" class="img" />
+        <img src="img/hero.jpg" alt="Friseursalon mit elegantem Interieur" loading="lazy" class="img hero-media" />
       </div>
     </section>
 

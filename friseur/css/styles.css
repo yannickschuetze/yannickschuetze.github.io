@@ -14,6 +14,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 
 body {
@@ -64,6 +65,23 @@ body {
   font-family: "Playfair Display", serif;
   font-size: 2rem;
   font-weight: 600;
+}
+
+.menu-toggle {
+  display: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--text);
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .menu {
@@ -360,12 +378,80 @@ h3,
 }
 
 @media (max-width: 900px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+
+  .nav-wrap {
+    position: relative;
+    min-height: 76px;
+    padding: 0.9rem 0;
+    z-index: 41;
+  }
+
+  .nav-wrap nav {
+    display: none;
+    position: absolute;
+    top: calc(100% - 0.1rem);
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding-top: 0.55rem;
+    z-index: 42;
+  }
+
+  .nav-wrap nav.is-open {
+    display: block;
+  }
+
+  .brand {
+    font-size: 1.35rem;
+    max-width: calc(100% - 72px);
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.28rem;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(176, 138, 85, 0.22);
+    background: rgba(255, 250, 243, 0.95);
+    box-shadow: 0 10px 24px rgba(77, 56, 28, 0.08);
+  }
+
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
   .hero-grid,
   .price-wrap,
   .about,
   .cards,
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    order: 2;
+  }
+
+  .hero-media {
+    order: 1;
+    aspect-ratio: 4 / 3;
   }
 
   .contact-card-highlight,
@@ -392,9 +478,31 @@ h3,
   }
 
   .menu {
-    gap: 0.7rem;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid rgba(176, 138, 85, 0.18);
+    border-radius: 22px;
+    background: rgba(255, 250, 243, 0.92);
+    box-shadow: 0 14px 30px rgba(77, 56, 28, 0.08);
+  }
+
+  .menu li {
+    min-width: 0;
+  }
+
+  .menu a {
+    display: block;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    text-align: left;
+    background: #fff;
+    border: 1px solid var(--line);
+    font-size: 0.96rem;
+    line-height: 1.25;
+    box-shadow: 0 8px 18px rgba(42, 33, 20, 0.05);
   }
 
   .hero,
@@ -404,6 +512,36 @@ h3,
 }
 
 @media (max-width: 560px) {
+  .container {
+    width: min(1100px, calc(100% - 24px));
+  }
+
+  .nav-wrap {
+    min-height: 70px;
+    padding: 0.75rem 0;
+  }
+
+  .brand {
+    font-size: 1.15rem;
+  }
+
+  .menu a {
+    padding: 0.78rem 0.85rem;
+    font-size: 0.95rem;
+  }
+
+  .hero {
+    padding-top: 1.25rem;
+  }
+
+  .hero-grid {
+    gap: 1.5rem;
+  }
+
+  .hero-media {
+    aspect-ratio: 5 / 4;
+  }
+
   .contact-card {
     padding: 1.25rem;
   }
