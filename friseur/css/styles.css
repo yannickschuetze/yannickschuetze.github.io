@@ -166,6 +166,45 @@ body {
   padding: 5.5rem 0;
 }
 
+.opening-notice {
+  padding: 0 0 1rem;
+}
+
+.opening-notice-content {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.42fr) 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 14px;
+  background: var(--bg-alt);
+  box-shadow: var(--shadow);
+}
+
+.opening-notice-label {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.opening-notice h2 {
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+.opening-notice p {
+  margin: 0;
+}
+
+.opening-notice p + p {
+  margin-top: 0.25rem;
+}
+
 .hero-grid,
 .price-wrap,
 .about {
@@ -547,6 +586,11 @@ h3,
   .cards,
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+
+  .opening-notice-content {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
   }
 
   .hero-copy {
